@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { notFound , errorHandler } = require('./middlewares/errorMiddlewares');
 const dbconnect = require('./dbconnect');
+const userHandler = require('./routes/userRouter');
 
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //routes
+app.use('/api/v1/users', userHandler);
 
 
 app.get('/', (req, res) => {

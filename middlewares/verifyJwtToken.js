@@ -23,4 +23,4 @@ const verifyJwtToken = (req, res, next) => {
   }
 };
 
-module.exports = { verifyJwtToken };
+module.exports = verifyJwtToken ;
