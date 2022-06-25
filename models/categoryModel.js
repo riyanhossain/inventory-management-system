@@ -8,9 +8,13 @@ const categorySchema = mongoose.Schema({
     description:{
         type: String,
         required: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     }
 },{
     timestamps: true
 });
 
-module.exports = new mongoose.model('Product', categorySchema);
+module.exports = new mongoose.model('Category', categorySchema);
