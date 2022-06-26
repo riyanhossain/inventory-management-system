@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/create-category', verifyJwtToken, createCategory);
 
-router.patch('/update-category/:id', verifyJwtToken, updateCategory);
+router.patch('/update-category', verifyJwtToken, updateCategory);
 
 router.delete('/delete-category/:id', verifyJwtToken, deleteCategory);
 

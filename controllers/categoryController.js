@@ -21,7 +21,7 @@ const createCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
     try {
-        const category = await categoryModel.updateOne({_id :req.params.id},req.body);
+        const category = await categoryModel.updateOne({_id :req.body.id},req.body);
         if(req.body.name === category.name){
             return res.status(200).json({
                 message: 'Category updated successfully',

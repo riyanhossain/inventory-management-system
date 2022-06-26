@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

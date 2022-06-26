@@ -2,6 +2,7 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const { generateJwtToken } = require("../utils/genateJwtToken");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const userRegister = async (req, res) => {
@@ -48,6 +49,8 @@ const userLogin = async (req, res) => {
   return res.status(200).json({
     message: "User logged in successfully",
     token,
+    name : user.name,
+    signIn : true
   });
 };
 
@@ -105,7 +108,39 @@ const userChangePassword = async (req, res) => {
   }
 };
 
+const userVerifyEmail = async (req, res) => {
+  const { token, password } = req.body;
+  const decodedToken =  jwt.verify(token, process.env.JWT_SECRET_KEY);
 
+  const user = await userModel.findOne({ _id: decodedToken.id });
+  if (!user) {
+    return res.status(401).json({
+      message: "User not found",
+    });
+  }
+  const isPasswordSame = await bcrypt.compare(password, user.password);
+  if (!isPasswordSame) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const userUpdated = await userModel.findOneAndUpdate(
+      { _id: decodedToken.id },
+      { password: hashedPassword }
+    );
+    if (userUpdated) {
+      return res.status(200).json({
+        message: "password changed successfully",
+      });
+    } else {
+      return res.status(500).json({
+        message: "Error updating user",
+      });
+    }
+  } else {
+    return res.status(200).json({
+      message: "password is same",
+    });
+  }
+  
+}
 
 const sendResetPasswordLink = async (req, res) => {
     try {
@@ -132,7 +167,7 @@ const sendResetPasswordLink = async (req, res) => {
                 subject: "Reset password", // Subject line
                 // text: "Hello world?", // plain text body
                 html: `<h3>${user.name} your password reset link...</h3>
-                <a href="http://${req.headers.host}/user/verify-email?token=${generateJwtToken(user)}">"http://${req.headers.host}/user/verify-email?token=${generateJwtToken(user)}"<a/>`, // html body
+                <a href="http://localhost:3000/user/verify-email?token=${generateJwtToken(user)}">"http://localhost:3000/user/verify-email?token=${generateJwtToken(user)}"<a/>`, // html body
               });
                 return res.status(200).json({
                     message: "Email sent successfully",
@@ -147,4 +182,4 @@ const sendResetPasswordLink = async (req, res) => {
     }
   };
 
-module.exports = { userRegister, userLogin, userUpdate, userChangePassword, sendResetPasswordLink };
+module.exports = { userRegister, userLogin, userUpdate, userChangePassword, sendResetPasswordLink, userVerifyEmail };
