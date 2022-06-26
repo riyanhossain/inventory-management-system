@@ -43,10 +43,11 @@ export default function CategoryList() {
             </th>
           </tr>
         </thead>
+        <tbody >
         {!isLoading &&
           categories.map((category) => (
-            <tbody key={category._id}>
-              <tr className="border-black border-2">
+            
+              <tr className="border-black border-2" key={category._id}>
                 <td className="border-black border-2 p-2">{category.name}</td>
                 <td className="border-black border-2 p-2 whitespace-pre-wrap">
                   {category.description}
@@ -61,8 +62,9 @@ export default function CategoryList() {
                   <AddProduct category={category}/>
                 </td>
               </tr>
-            </tbody>
+            
           ))}
+          </tbody>
       </table>
 
 

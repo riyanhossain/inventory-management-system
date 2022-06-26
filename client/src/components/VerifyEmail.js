@@ -13,7 +13,7 @@ export default function VerifyEmail() {
       console.log(inputs);
     const VerifyEmail = async () => {
         try {
-            const response = await axios.post(
+            const response = await axios.patch(
                 "http://localhost:5000/api/v1/users/new-password",
                 {token, password: inputs.password}
             );

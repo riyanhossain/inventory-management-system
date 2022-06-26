@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const userRegister = async (req, res) => {
+  console.log(res.body);
   const { name, email, password } = req.body;
   const user = await userModel.findOne({ email });
   if (user) {
@@ -50,20 +51,21 @@ const userLogin = async (req, res) => {
     message: "User logged in successfully",
     token,
     name : user.name,
-    signIn : true
+    signIn : true,
+    email : user.email,
   });
 };
 
 const userUpdate = async (req, res) => {
   const { name, email } = req.body;
-  const user = await userModel.findOne({ email });
+  const user = await userModel.findOne({ _id: req.user.id });
   if (!user) {
     return res.status(401).json({
       message: "User not found",
     });
   }
   const userUpdated = await userModel.findOneAndUpdate(
-    { email },
+    { _id: req.user.id },
     { name, email }
   );
   if (userUpdated) {
@@ -79,7 +81,7 @@ const userUpdate = async (req, res) => {
 
 const userChangePassword = async (req, res) => {
   const { email, password} = req.body;
-  const user = await userModel.findOne({ email });
+  const user = await userModel.findOne({ _id : req.user.id });
   if (!user) {
     return res.status(401).json({
       message: "User not found",
@@ -89,7 +91,7 @@ const userChangePassword = async (req, res) => {
   if (!isPasswordSame) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const userUpdated = await userModel.findOneAndUpdate(
-      { email },
+      { _id: req.user.id },
       { password: hashedPassword }
     );
     if (userUpdated) {
@@ -102,7 +104,7 @@ const userChangePassword = async (req, res) => {
       });
     }
   } else {
-    return res.status(500).json({
+    return res.status(200).json({
       message: "password is same",
     });
   }

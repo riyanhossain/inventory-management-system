@@ -8,12 +8,12 @@ router.post('/register', userRegister);
 
 router.post('/login', userLogin);
 
-router.post('/update', verifyJwtToken, userUpdate);
+router.patch('/update', verifyJwtToken, userUpdate);
 
-router.post('/change-password', verifyJwtToken, userChangePassword);
+router.patch('/change-password', verifyJwtToken, userChangePassword);
 
 router.post('/reset-password', sendResetPasswordLink);
 
-router.post('/new-password', userVerifyEmail);
+router.patch('/new-password', userVerifyEmail);
 
 module.exports = router;

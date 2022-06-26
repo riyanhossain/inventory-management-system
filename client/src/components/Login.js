@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 import axios from "axios";
+import SignUp from "./SignUp";
 
 export default function Login() {
   const [toggle, setToggle] = useState(true);
@@ -30,7 +31,6 @@ export default function Login() {
     e.preventDefault();
     fetchLogin();
   };
-  console.log(user);
   return (
     <div className="flex flex-col justify-center items-center h-[600px]">
       {toggle ? (
@@ -85,38 +85,8 @@ export default function Login() {
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center bg-white h-[382px] w-[648px] shadow-lg">
-          <div className="w-10/12 flex flex-col justify-center items-center">
-            <h1 className="text-2xl font-bold">Sign Up</h1>
-            <br />
-            <form className="flex flex-col justify-center items-center w-full gap-y-8">
-              <input
-                type="text"
-                placeholder="name"
-                className="w-full bg-[#F0F2F3] p-2"
-                autoComplete="name"
-                required
-              />
-              <input
-                type="email"
-                placeholder="email"
-                className="w-full bg-[#F0F2F3] p-2"
-                autoComplete="email"
-                required
-              />
-              <input
-                type="password"
-                placeholder="password"
-                className="w-full bg-[#F0F2F3] p-2"
-                autoComplete="password"
-                required
-              />
-              <input
-                type="submit"
-                value="Sign In"
-                className="w-full bg-[#029FAE] p-2 font-semibold text-white"
-              />
-            </form>
-          </div>
+          <SignUp/>
+      
           <p>
             Already have account?{" "}
             <button

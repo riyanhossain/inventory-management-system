@@ -10,18 +10,20 @@ export default function Navbar() {
     <Menu
       items={[
         {
-          label: <a href="https://www.antgroup.com">Update Profile</a>,
+          label: <Link to='/update-profile'>Update Profile</Link>,
           key: "0",
         },
         {
-          label: <a href="https://www.aliyun.com">Change Password</a>,
+          label: <Link to='/change-password'>Change Password</Link>,
           key: "1",
         },
         {
           type: "divider",
         },
         {
-          label: "Logout",
+          label: <button onClick={() => setUser({
+            signIn: false,
+          })}>Logout</button>,
           key: "3",
         },
       ]}
