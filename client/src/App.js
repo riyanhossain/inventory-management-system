@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<Category />} />
         )}
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/user/verify-email" element={<VerifyEmail />} />
         <Route path="/*" element={<PrivateRoute />}>
           <Route path="product-list" element={<ProductList />} />
           <Route path="change-password" element={<ChangePassword />} />
